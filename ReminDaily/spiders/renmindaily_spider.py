@@ -6,6 +6,7 @@ from scrapy import FormRequest
 from scrapy import Request
 import re,os,time
 class ReMinDailySpider(Spider):
+    """正式爬虫入口类"""
     name = 'rmdaily_spider'
     allowed_domains = ['rmrbw.info']
     start_urls=["http://rmrbw.info/"]  
@@ -23,7 +24,7 @@ class ReMinDailySpider(Spider):
             match = re.search("(\d+).*?",date,re.S) #用正则表达式根据该年月(19xx年x月)取出年份
             if match:
                 year = int(match.group(1))
-                if year>=1949 and year<= 1949: #判断年份是在1946和1956年之间
+                if year>=1950 and year<= 1950: #判断年份是在1946和1956年之间
                     url = selector.xpath("@href").extract()[0] #取该年月的链接
                     news_num = site.xpath("./tr/td[@style='padding-left:13px']/span/text()").extract()[0] #取出该年月有多少条新闻记录
                     newsnum = int(news_num) 
@@ -78,7 +79,8 @@ class ReMinDailySpider(Spider):
         print "parse_news:"+str(etime-stime)
     
     def write_to_file(self,dict): 
-        os.chdir('/home/frank/技术学习/web_spider/ReminDaily/rm_result')
+	file_path = "/home/frank/技术学习/web_spider/rm_result"
+        os.chdir(file_path)
         date = dict['date'].split('-')
         year = date[0]
         month = date[1]

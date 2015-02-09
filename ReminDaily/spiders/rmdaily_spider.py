@@ -4,6 +4,7 @@ from scrapy.selector import Selector
 from scrapy import FormRequest
 import os,time
 class RmDailySpider(Spider):
+    """测试用"""
     name = 'rmdaily'
     allowed_domains = ['rmrbw.info']
     _main_site = "http://rmrbw.info/"
